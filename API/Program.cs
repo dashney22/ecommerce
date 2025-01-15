@@ -1,5 +1,6 @@
 // Sets up the application, initializing, configuration, dependency injection, and other services.
 using API.Data;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
