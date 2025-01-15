@@ -1,6 +1,19 @@
+# Build results
 bin/
 obj/
+
+# User-specific files
 *.user
 *.suo
 *.dll
+
+# Backup and cache files
 *.log
+.vscode/
+
+#Ignore SQLite database files
+*.sqlite
+*.sqlite3
+
+# Ignore Visual Studio files
+.vs/
