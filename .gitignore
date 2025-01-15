@@ -1,6 +1,7 @@
 # Build results
 bin/
 obj/
+appsettings.json
 
 # User-specific files
 *.suo
@@ -14,6 +15,7 @@ obj/
 #Ignore SQLite database files
 *.sqlite
 *.sqlite3
+*db
 
 # Ignore Visual Studio files
 .vs/
