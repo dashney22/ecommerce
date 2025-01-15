@@ -3,13 +3,13 @@ bin/
 obj/
 
 # User-specific files
-*.user
 *.suo
 *.dll
 
-# Backup and cache files
-*.log
-.vscode/
+# Configuration files
+*.config
+*.user
+*.prefs
 
 #Ignore SQLite database files
 *.sqlite
@@ -17,3 +17,14 @@ obj/
 
 # Ignore Visual Studio files
 .vs/
+.idea/
+.vscode/
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# NuGet package files
+/packages/
