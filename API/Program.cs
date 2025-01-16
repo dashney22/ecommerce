@@ -1,5 +1,6 @@
 // Sets up the application, initializing, configuration, dependency injection, and other services.
 using API.Data;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<StoreContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Register Controllers to the service - [Only registrations and No Routes]
 builder.Services.AddControllers();
+
+// Register IProductRepository with its implementation
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 //This finalizes the setup and prepares the application for processing HTTP requests.
 var app = builder.Build();
