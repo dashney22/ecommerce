@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,18 +14,18 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
-        private readonly StoreContext _context;
+        private readonly IProductRepository _repository;
 
-        public ProductsController(StoreContext context)
+        public ProductsController(IProductRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts() {
             // ToListAsync() makes the procedure to be asynchronous!!!
             // ToList() leaves it synchronous and might create query backlog
-            var products = await _context.Products.ToListAsync();
+            var products = await _repository.GetProductsAsync();
 
             if (products == null) { 
                 return NotFound();
@@ -35,7 +36,7 @@ namespace API.Controllers
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id) {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _repository.GetProductByIdAsync(id);
 
             // One can use FindAsync() or SingleOrDeafultAsync(x=>x.Id=id)
             if (product == null)
