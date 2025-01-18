@@ -1,5 +1,4 @@
 // Sets up the application, initializing, configuration, dependency injection, and other services.
-using API.Data;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-
-
 
 //[builder.services]: Provides a container to register application services, such as middleware, controllers, or third-party libraries
 //[addOpenApi]: Registers OpenAPI/Swagger services for documenting and testing your API. Swagger is a popular tool for
@@ -25,8 +22,27 @@ builder.Services.AddControllers();
 // Register IProductRepository with its implementation
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+builder.Services.AddEndpointsApiExplorer();
+
+
 //This finalizes the setup and prepares the application for processing HTTP requests.
 var app = builder.Build();
+
+// Apply migrations during startup || Automated Migrations
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<StoreContext>();
+        await context.Database.MigrateAsync(); // Applies migrations
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred during migration");
+    }
+}
 
 // Configure the HTTP request pipeline.
 //[Part 1] Checks if the application is running in the development environment
