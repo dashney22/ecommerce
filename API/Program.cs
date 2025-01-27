@@ -23,6 +23,9 @@ builder.Services.AddControllers();
 // Register IProductRepository with its implementation
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+// Register IProductBrandRepository with its implementation
+builder.Services.AddScoped<IProductBrandRepository, ProductBrandRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 
