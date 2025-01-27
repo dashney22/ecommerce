@@ -24,7 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts() {
             // ToListAsync() makes the procedure to be asynchronous!!!
-            // ToList() leaves it synchronous and might create query backlog
+            // ToList() do not leave it synchronous because it might create query backlog
             var products = await _repository.GetProductsAsync();
 
             if (products == null) { 

@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,12 +36,14 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<StoreContext>();
+        var loggerFactory = services.GetRequiredService<ILoggerFactory>();
         await context.Database.MigrateAsync(); // Applies migrations
+        await StoreContextSeed.SeedAsync(context, loggerFactory);  // Seeds Data
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred during migration");
+        logger.LogError(ex, "An error occurred during migration or seeding");
     }
 }
 
