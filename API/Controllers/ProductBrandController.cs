@@ -10,11 +10,11 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsBrandController : ControllerBase
+    public class ProductBrandController : ControllerBase
     {
         private readonly IProductBrandRepository _productBrandRepository;
 
-        public ProductsBrandController(IProductBrandRepository productBrandRepository) {
+        public ProductBrandController(IProductBrandRepository productBrandRepository) {
             _productBrandRepository = productBrandRepository;
         }
 
