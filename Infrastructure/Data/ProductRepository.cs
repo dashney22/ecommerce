@@ -19,8 +19,12 @@ namespace Infrastructure.Data
         }
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            
+            var product = await _context.Products
+                .Include(p => p.ProductBrand)
+                .Include(p => p.ProductType)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+
             if (product == null)
             {
                 throw new KeyNotFoundException($"Product with ID {id} was not found.");
@@ -30,7 +34,10 @@ namespace Infrastructure.Data
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+            .Include(p => p.ProductType)
+            .Include(p=>p.ProductBrand)
+            .ToListAsync();
         }
     }
 }
